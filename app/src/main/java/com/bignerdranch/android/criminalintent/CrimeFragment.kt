@@ -70,7 +70,6 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         photoButton = view.findViewById(R.id.crime_camera) as ImageButton
         photoView = view.findViewById(R.id.crime_photo) as ImageView
 
-
         return view
     }
 
@@ -143,7 +142,6 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
 
         suspectButton.apply {
             val pickContactIntent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
-            pickContactIntent.addCategory(Intent.CATEGORY_HOME)
             setOnClickListener {
                 startActivityForResult(pickContactIntent, REQUEST_CONTACT)
             }
@@ -214,8 +212,10 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         if (photoFile.exists()) {
             val bitmap = PictureUtils().getScaledBitmap(photoFile.path, requireActivity())
             photoView.setImageBitmap(bitmap)
+            photoView.contentDescription = getString(R.string.crime_photo_image_description)
         } else {
             photoView.setImageBitmap(null)
+            photoView.contentDescription = getString(R.string.crime_photo_no_image_description)
         }
     }
 
